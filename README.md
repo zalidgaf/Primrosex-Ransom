@@ -1,2 +1,0 @@
-# Primrosex-Ransom
-Primrosex Ransomware
