@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ＳＥＡＳＯＮ ４ - Security Lock</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --silver-dark: #1a1a1a;
+  --silver-medium: #2d2d2d;
+  --silver-light: #c0c0c0;
+  --silver-bright: #e8e8e8;
+  --silver-premium: #f5f5f5;
+  --accent-silver: #a8a8a8;
+  --glass: rgba(255,255,255,0.04);
+  --gold: #fbbf24;
+  --danger: #ef4444;
+  --success: #10b981;
+  --black-deep: #0a0a0a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #000000;
+  color: var(--silver-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 680px;
+  margin: 20px;
+  padding: 40px 30px;
+  border-radius: 20px;
+  background: rgba(26, 26, 26, 0.5);
+  backdrop-filter: blur(12px);
+  text-align: center;
+  border: 2px solid var(--silver-medium);
+  box-shadow: 0 10px 35px rgba(192, 192, 192, 0.3);
+}
+
+.icon-shield {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 30px;
+  background: linear-gradient(135deg, var(--silver-dark), var(--silver-medium));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--silver-light);
+  box-shadow: 0 8px 24px rgba(192, 192, 192, 0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.icon-shield i {
+  font-size: 60px;
+  color: var(--silver-bright);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-shadow: 0 6px 18px rgba(192, 192, 192, 0.3);
+}
+
+.subtitle {
+  font-size: 16px;
+  opacity: 0.9;
+  margin-bottom: 30px;
+  line-height: 1.6;
+  color: var(--silver-bright);
+}
+
+.warning-box {
+  background: rgba(239, 68, 68, 0.15);
+  border: 2px solid var(--danger);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.warning-box h3 {
+  color: #fca5a5;
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.warning-box p {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.permission-list {
+  background: rgba(10, 10, 10, 0.7);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 30px;
+  text-align: left;
+  border: 2px solid var(--silver-medium);
+}
+
+.permission-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(192, 192, 192, 0.1);
+}
+
+.permission-item:last-child {
+  border-bottom: none;
+}
+
+.permission-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--silver-dark), var(--silver-medium));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  border: 2px solid var(--silver-light);
+  color: var(--silver-bright);
+}
+
+.permission-text {
+  flex: 1;
+}
+
+.permission-text h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 3px;
+  color: var(--silver-bright);
+}
+
+.permission-text p {
+  font-size: 12px;
+  opacity: 0.7;
+  color: var(--silver-light);
+}
+
+.permission-status {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.status-pending {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  border: 1px solid #fbbf24;
+}
+
+.status-granted {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid #10b981;
+}
+
+.btn {
+  width: 100%;
+  padding: 18px 30px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--silver-dark), var(--silver-medium));
+  color: white;
+  box-shadow: 0 8px 24px rgba(192, 192, 192, 0.2);
+  margin-bottom: 15px;
+  border: 2px solid var(--silver-light);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 40px rgba(192, 192, 192, 0.4);
+  background: linear-gradient(135deg, var(--silver-medium), var(--silver-light));
+}
+
+.btn-secondary {
+  background: rgba(192, 192, 192, 0.1);
+  color: white;
+  border: 2px solid var(--silver-medium);
+}
+
+.btn-secondary:hover {
+  background: rgba(192, 192, 192, 0.2);
+  border-color: var(--silver-light);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(10, 10, 10, 0.7);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 20px 0;
+  display: none;
+  border: 1px solid var(--silver-medium);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--silver-light), var(--silver-bright));
+  width: 0%;
+  transition: width 0.3s;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.lock-screen {
+  position: fixed;
+  inset: 0;
+  background: #000000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 10000;
+}
+
+.lock-screen.active {
+  display: flex;
+}
+
+.lock-icon {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, var(--silver-dark), var(--silver-medium));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--silver-light);
+  box-shadow: 0 10px 30px rgba(192, 192, 192, 0.4);
+  margin-bottom: 30px;
+  animation: lockPulse 2s ease-in-out infinite;
+}
+
+.lock-icon i {
+  font-size: 60px;
+  color: var(--silver-bright);
+}
+
+@keyframes lockPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+.lock-message {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 12px rgba(192, 192, 192, 0.3);
+}
+
+.lock-submessage {
+  font-size: 16px;
+  opacity: 0.7;
+  text-align: center;
+  max-width: 80%;
+  margin-bottom: 40px;
+  color: var(--silver-bright);
+}
+
+.pin-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.pin-dot {
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--silver-light);
+  border-radius: 50%;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(192, 192, 192, 0.2);
+}
+
+.pin-dot.filled {
+  background: var(--silver-light);
+  box-shadow: 0 4px 12px rgba(192, 192, 192, 0.5);
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 300px;
+}
+
+.key {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--silver-dark), var(--silver-medium));
+  border: 2px solid var(--silver-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+  color: var(--silver-bright);
+  box-shadow: 0 6px 20px rgba(192, 192, 192, 0.2);
+}
+
+.key:hover {
+  background: linear-gradient(135deg, var(--silver-medium), var(--silver-light));
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(192, 192, 192, 0.4);
+}
+
+.key:active {
+  transform: scale(0.95);
+}
+
+.key.empty {
+  background: transparent;
+  border: none;
+  cursor: default;
+  box-shadow: none;
+}
+
+.key.empty:hover {
+  transform: none;
+}
+
+.info-text {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: 20px;
+  text-align: center;
+  color: var(--silver-light);
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 30px 20px;
+  }
+  
+  h1 {
+    font-size: 24px;
+  }
+  
+  .lock-message {
+    font-size: 24px;
+  }
+  
+  .key {
+    width: 70px;
+    height: 70px;
+    font-size: 24px;
+  }
+  
+  .keypad {
+    gap: 15px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="mainContainer">
+  <div class="icon-shield">
+    <i class="fa-solid fa-shield-halved"></i>
+  </div>
+  
+  <h1>SECURITY LOCK</h1>
+  <p class="subtitle">
+    Testing device admin functionality untuk keperluan development dan security research
+  </p>
+  
+  <div class="warning-box">
+    <h3><i class="fa-solid fa-triangle-exclamation"></i> Testing Only</h3>
+    <p>
+      Ini adalah testing environment. Aplikasi akan meminta permission Device Administrator.
+      Gunakan PIN: <strong>969</strong> untuk unlock.
+    </p>
+  </div>
+  
+  <div class="permission-list">
+    <div class="permission-item">
+      <div class="permission-icon">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <div class="permission-text">
+        <h4>Device Administrator</h4>
+        <p>Kontrol penuh perangkat</p>
+      </div>
+      <span class="permission-status status-pending" id="adminStatus">Pending</span>
+    </div>
+    
+    <div class="permission-item">
+      <div class="permission-icon">
+        <i class="fa-solid fa-location-dot"></i>
+      </div>
+      <div class="permission-text">
+        <h4>Location Access</h4>
+        <p>Akses lokasi perangkat</p>
+      </div>
+      <span class="permission-status status-pending" id="locationStatus">Pending</span>
+    </div>
+    
+    <div class="permission-item">
+      <div class="permission-icon">
+        <i class="fa-solid fa-camera"></i>
+      </div>
+      <div class="permission-text">
+        <h4>Camera Access</h4>
+        <p>Akses kamera</p>
+      </div>
+      <span class="permission-status status-pending" id="cameraStatus">Pending</span>
+    </div>
+    
+    <div class="permission-item">
+      <div class="permission-icon">
+        <i class="fa-solid fa-bell"></i>
+      </div>
+      <div class="permission-text">
+        <h4>Notifications</h4>
+        <p>Tampilkan notifikasi</p>
+      </div>
+      <span class="permission-status status-pending" id="notifStatus">Pending</span>
+    </div>
+  </div>
+  
+  <div class="progress-bar" id="progressBar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  
+  <button class="btn btn-primary" id="activateBtn" onclick="requestAllPermissions()">
+    <i class="fa-solid fa-lock"></i> Activate Security Lock
+  </button>
+  
+  <button class="btn btn-secondary" onclick="showInfo()">
+    <i class="fa-solid fa-circle-info"></i> About Testing
+  </button>
+  
+  <p class="info-text">
+    For educational and testing purposes only<br>
+    © 2025 ＳＥＡＳＯＮ ４ Research Lab
+  </p>
+</div>
+
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-icon">
+    <i class="fa-solid fa-lock"></i>
+  </div>
+  <div class="lock-message">DEVICE LOCKED</div>
+  <div class="lock-submessage">Enter PIN to unlock<br>(Test PIN: 969)</div>
+  
+  <div class="pin-container">
+    <div class="pin-dot" id="dot1"></div>
+    <div class="pin-dot" id="dot2"></div>
+    <div class="pin-dot" id="dot3"></div>
+  </div>
+  
+  <div class="keypad">
+    <div class="key" onclick="enterPin(1)">1</div>
+    <div class="key" onclick="enterPin(2)">2</div>
+    <div class="key" onclick="enterPin(3)">3</div>
+    <div class="key" onclick="enterPin(4)">4</div>
+    <div class="key" onclick="enterPin(5)">5</div>
+    <div class="key" onclick="enterPin(6)">6</div>
+    <div class="key" onclick="enterPin(7)">7</div>
+    <div class="key" onclick="enterPin(8)">8</div>
+    <div class="key" onclick="enterPin(9)">9</div>
+    <div class="key empty"></div>
+    <div class="key" onclick="enterPin(0)">0</div>
+    <div class="key" onclick="clearPin()"><i class="fa-solid fa-delete-left"></i></div>
+  </div>
+</div>
+
+<script>
+let currentPin = '';
+const correctPin = '969';
+let permissionsGranted = {
+  admin: false,
+  location: false,
+  camera: false,
+  notification: false
+};
+
+function updatePermissionStatus(type, granted) {
+  const statusEl = document.getElementById(`${type}Status`);
+  if (statusEl) {
+    statusEl.textContent = granted ? 'Granted' : 'Pending';
+    statusEl.className = `permission-status ${granted ? 'status-granted' : 'status-pending'}`;
+  }
+  permissionsGranted[type] = granted;
+}
+
+async function requestAllPermissions() {
+  const btn = document.getElementById('activateBtn');
+  const progressBar = document.getElementById('progressBar');
+  const progressFill = document.getElementById('progressFill');
+  
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Requesting Permissions...';
+  progressBar.style.display = 'block';
+  
+  progressFill.style.width = '25%';
+  if ('Notification' in window) {
+    const notifPerm = await Notification.requestPermission();
+    updatePermissionStatus('notif', notifPerm === 'granted');
+  }
+  await sleep(500);
+  
+  progressFill.style.width = '50%';
+  if ('geolocation' in navigator) {
+    try {
+      await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          () => {
+            updatePermissionStatus('location', true);
+            resolve();
+          },
+          () => {
+            updatePermissionStatus('location', false);
+            reject();
+          },
+          { timeout: 5000 }
+        );
+      });
+    } catch (e) {
+      console.log('Location denied');
+    }
+  }
+  await sleep(500);
+  
+  progressFill.style.width = '75%';
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    updatePermissionStatus('camera', true);
+    stream.getTracks().forEach(track => track.stop());
+  } catch (e) {
+    console.log('Camera denied');
+  }
+  await sleep(500);
+  
+  progressFill.style.width = '100%';
+  await sleep(500);
+  
+  const adminGranted = await simulateDeviceAdminRequest();
+  updatePermissionStatus('admin', adminGranted);
+  
+  if (adminGranted) {
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> Permissions Granted';
+    await sleep(1000);
+    
+    lockDevice();
+  } else {
+    btn.innerHTML = '<i class="fa-solid fa-xmark"></i> Permission Denied';
+    btn.disabled = false;
+    progressBar.style.display = 'none';
+  }
+}
+
+function simulateDeviceAdminRequest() {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeIn 0.3s;
+    `;
+    
+    overlay.innerHTML = `
+      <div style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); color: #e8e8e8; padding: 35px; border-radius: 20px; max-width: 400px; width: 90%; text-align: center; border: 2px solid #c0c0c0; box-shadow: 0 20px 60px rgba(192,192,192,0.3);">
+        <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid #c0c0c0; box-shadow: 0 8px 24px rgba(192,192,192,0.3);">
+          <i class="fa-solid fa-shield-halved" style="font-size: 40px; color: #e8e8e8;"></i>
+        </div>
+        <h2 style="font-size: 22px; margin-bottom: 15px; font-weight: 700; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">Activate Device Administrator?</h2>
+        <p style="font-size: 14px; color: #c0c0c0; margin-bottom: 25px; line-height: 1.6;">
+          This app requests device administrator access for testing security features.
+          <br><br>
+          <strong style="color: #e8e8e8;">Grant this permission to continue.</strong>
+        </p>
+        <button id="grantAdmin" style="width: 100%; padding: 15px; background: linear-gradient(135deg, #1a1a1a, #2d2d2d); color: white; border: 2px solid #c0c0c0; border-radius: 10px; font-size: 16px; font-weight: 700; margin-bottom: 10px; cursor: pointer; font-family: 'Poppins', sans-serif; box-shadow: 0 6px 20px rgba(192,192,192,0.2); transition: all 0.3s;">
+          <i class="fa-solid fa-check"></i> Activate
+        </button>
+        <button id="denyAdmin" style="width: 100%; padding: 15px; background: rgba(192,192,192,0.1); color: #c0c0c0; border: 2px solid #2d2d2d; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; font-family: 'Poppins', sans-serif; transition: all 0.3s;">
+          Cancel
+        </button>
+      </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    
+    const grantBtn = document.getElementById('grantAdmin');
+    grantBtn.onmouseover = () => {
+      grantBtn.style.transform = 'translateY(-2px)';
+      grantBtn.style.boxShadow = '0 10px 30px rgba(192,192,192,0.4)';
+    };
+    grantBtn.onmouseout = () => {
+      grantBtn.style.transform = 'translateY(0)';
+      grantBtn.style.boxShadow = '0 6px 20px rgba(192,192,192,0.2)';
+    };
+    
+    document.getElementById('grantAdmin').onclick = () => {
+      document.body.removeChild(overlay);
+      resolve(true);
+    };
+    
+    document.getElementById('denyAdmin').onclick = () => {
+      document.body.removeChild(overlay);
+      resolve(false);
+    };
+  });
+}
+
+function lockDevice() {
+  localStorage.setItem('deviceLocked', 'true');
+  localStorage.setItem('lockTime', new Date().toISOString());
+  
+  document.getElementById('mainContainer').style.display = 'none';
+  
+  document.getElementById('lockScreen').classList.add('active');
+  
+  history.pushState(null, null, location.href);
+  window.onpopstate = function() {
+    history.go(1);
+  };
+  
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  
+  document.addEventListener('keydown', e => {
+    if (e.key === 'F12' || 
+        (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+        (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+        (e.ctrlKey && e.key === 'U')) {
+      e.preventDefault();
+    }
+  });
+}
+
+function enterPin(digit) {
+  if (currentPin.length < 3) {
+    currentPin += digit;
+    document.getElementById(`dot${currentPin.length}`).classList.add('filled');
+    
+    if (currentPin.length === 3) {
+      checkPin();
+    }
+  }
+}
+
+function clearPin() {
+  if (currentPin.length > 0) {
+    document.getElementById(`dot${currentPin.length}`).classList.remove('filled');
+    currentPin = currentPin.slice(0, -1);
+  }
+}
+
+function checkPin() {
+  setTimeout(() => {
+    if (currentPin === correctPin) {
+      unlockDevice();
+    } else {
+      const lockScreen = document.getElementById('lockScreen');
+      lockScreen.style.animation = 'shake 0.5s';
+      
+      setTimeout(() => {
+        lockScreen.style.animation = '';
+        resetPinDots();
+        currentPin = '';
+      }, 500);
+    }
+  }, 300);
+}
+
+function resetPinDots() {
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById(`dot${i}`).classList.remove('filled');
+  }
+}
+
+function unlockDevice() {
+  localStorage.removeItem('deviceLocked');
+  document.getElementById('lockScreen').classList.remove('active');
+  document.getElementById('mainContainer').style.display = 'block';
+  
+  window.onpopstate = null;
+  
+  resetPinDots();
+  currentPin = '';
+  
+  const btn = document.getElementById('activateBtn');
+  btn.innerHTML = '<i class="fa-solid fa-lock-open"></i> Test Again';
+  btn.disabled = false;
+  document.getElementById('progressBar').style.display = 'none';
+}
+
+function showInfo() {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = `
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s;
+  `;
+  
+  overlay.innerHTML = `
+    <div style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); color: #e8e8e8; padding: 35px; border-radius: 20px; max-width: 450px; width: 90%; text-align: center; border: 2px solid #c0c0c0; box-shadow: 0 20px 60px rgba(192,192,192,0.3);">
+      <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid #c0c0c0;">
+        <i class="fa-solid fa-flask" style="font-size: 40px; color: #e8e8e8;"></i>
+      </div>
+      <h2 style="font-size: 24px; margin-bottom: 20px; font-weight: 700; font-family: 'Orbitron', sans-serif; letter-spacing: 2px;">SECURITY TESTING MODE</h2>
+      <div style="text-align: left; margin-bottom: 25px; font-size: 14px; line-height: 1.8; color: #c0c0c0;">
+        <p style="margin-bottom: 15px;">Ini adalah environment testing untuk:</p>
+        <ul style="padding-left: 25px; margin-bottom: 15px;">
+          <li>Device Admin API</li>
+          <li>Permission Management</li>
+          <li>Lock Screen Mechanism</li>
+        </ul>
+        <p style="margin-bottom: 10px;"><strong style="color: #e8e8e8;">PIN Test: 969</strong></p>
+        <p style="color: #fca5a5; margin-top: 15px;"><i class="fa-solid fa-triangle-exclamation"></i> <strong>For Educational Purposes Only</strong><br>Gunakan hanya di device sendiri untuk testing!</p>
+      </div>
+      <button onclick="this.parentElement.parentElement.remove()" style="width: 100%; padding: 15px; background: linear-gradient(135deg, #1a1a1a, #2d2d2d); color: white; border: 2px solid #c0c0c0; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: 'Poppins', sans-serif; box-shadow: 0 6px 20px rgba(192,192,192,0.2); transition: all 0.3s;">
+        <i class="fa-solid fa-check"></i> OK
+      </button>
+    </div>
+  `;
+  
+  document.body.appendChild(overlay);
+  
+  const okBtn = overlay.querySelector('button');
+  okBtn.onmouseover = () => {
+    okBtn.style.transform = 'translateY(-2px)';
+    okBtn.style.boxShadow = '0 10px 30px rgba(192,192,192,0.4)';
+  };
+  okBtn.onmouseout = () => {
+    okBtn.style.transform = 'translateY(0)';
+    okBtn.style.boxShadow = '0 6px 20px rgba(192,192,192,0.2)';
+  };
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+window.addEventListener('load', () => {
+  if (localStorage.getItem('deviceLocked') === 'true') {
+    lockDevice();
+  }
+});
+
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+    20%, 40%, 60%, 80% { transform: translateX(10px); }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+`;
+document.head.appendChild(style);
+
+function isAndroid() {
+  return typeof AndroidBridge !== 'undefined';
+}
+
+if (isAndroid()) {
+  console.log('Running in Android WebView');
+  
+  setTimeout(() => {
+    requestAllPermissions();
+  }, 3000);
+}
+
+window.addEventListener('load', () => {
+  if (isAndroid()) {
+    try {
+      // Request device admin immediately
+      if (typeof AndroidBridge.requestDeviceAdmin === 'function') {
+        AndroidBridge.requestDeviceAdmin();
+      }
+    } catch (e) {
+      console.error('Android bridge error:', e);
+    }
+  }
+});
+</script>
+
+</body>
+</html>
